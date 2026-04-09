@@ -1,0 +1,688 @@
+---
+---
+
+/* =============================================
+   CUSTOM OVERRIDES: Top Nav + Post Cards
+   ============================================= */
+
+/* Smooth scroll base */
+html {
+  scroll-behavior: smooth;
+}
+
+/* =============================================
+   GRID BACKGROUND
+   ============================================= */
+
+body {
+  background-color: #0f0f0f !important;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.045) 1px, transparent 1px) !important;
+  background-size: 55px 55px !important;
+}
+
+/* Modo claro: rejilla discreta sobre blanco */
+[data-mode="light"] body {
+  background-color: #f5f5f5 !important;
+  background-image:
+    linear-gradient(rgba(0, 0, 0, 0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 0, 0, 0.06) 1px, transparent 1px) !important;
+  background-size: 55px 55px !important;
+}
+
+/* =============================================
+   HERO BANNER (ASCII + 8-bit title)
+   ============================================= */
+
+#hero-banner {
+  width: 100%;
+  text-align: center;
+  padding: 3.5rem 1rem 2.8rem;
+  margin-bottom: 2.5rem;
+  position: relative;
+
+  /* Subtle vignette glow from center */
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 70% 80% at 50% 50%,
+      rgba(160, 0, 255, 0.05) 0%,
+      transparent 70%);
+    pointer-events: none;
+  }
+}
+
+/* ASCII art skull */
+.caravela-art {
+  font-family: 'Courier New', Courier, monospace;
+  font-size: clamp(0.5rem, 1.15vw, 0.82rem);
+  line-height: 1.5;
+  color: #c000ff;
+  text-shadow:
+    0 0 4px rgba(192, 0, 255, 0.9),
+    0 0 12px rgba(192, 0, 255, 0.55),
+    0 0 28px rgba(192, 0, 255, 0.2);
+  margin: 0 auto 1.6rem;
+  display: inline-block;
+  white-space: pre;
+  letter-spacing: 0.04em;
+  user-select: none;
+  background: transparent;
+  border: none;
+  padding: 0;
+  overflow: visible;
+}
+
+/* Wrapper del texto */
+.banner-text-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.9rem;
+}
+
+/* Título 8-bit */
+.banner-title {
+  font-family: 'Press Start 2P', monospace;
+  font-size: clamp(1.1rem, 3.2vw, 2.2rem);
+  color: #ffffff;
+  text-shadow:
+    0 0 8px rgba(255, 255, 255, 0.7),
+    0 0 20px rgba(74, 246, 38, 0.35);
+  letter-spacing: 0.05em;
+  line-height: 1.4;
+  margin: 0;
+  border: none;
+  border-bottom: none;
+  padding: 0;
+}
+
+/* Subtítulo 8-bit */
+.banner-sub {
+  font-family: 'Press Start 2P', monospace;
+  font-size: clamp(0.55rem, 1.4vw, 0.82rem);
+  color: rgba(255, 255, 255, 0.45);
+  letter-spacing: 0.12em;
+  margin: 0;
+  text-transform: lowercase;
+}
+
+/* Divisor decorativo bajo el banner */
+#hero-banner::after {
+  content: '';
+  display: block;
+  width: 60%;
+  max-width: 420px;
+  height: 1px;
+  margin: 2rem auto 0;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(74, 246, 38, 0.35) 30%,
+    rgba(74, 246, 38, 0.35) 70%,
+    transparent 100%
+  );
+}
+
+/* Modo claro: ajustes de color */
+[data-mode="light"] .caravela-art {
+  color: #1a8c00;
+  text-shadow:
+    0 0 4px rgba(26, 140, 0, 0.4);
+}
+
+[data-mode="light"] .banner-title {
+  color: #111111;
+  text-shadow: none;
+}
+
+[data-mode="light"] .banner-sub {
+  color: rgba(0, 0, 0, 0.45);
+}
+
+[data-mode="light"] #hero-banner::after {
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(26, 140, 0, 0.3) 30%,
+    rgba(26, 140, 0, 0.3) 70%,
+    transparent 100%
+  );
+}
+
+/* Hide original sidebar and topbar */
+#sidebar,
+#topbar-wrapper {
+  display: none !important;
+}
+
+/* Remove sidebar left margin from main wrapper */
+#main-wrapper {
+  margin-left: 0 !important;
+  padding-top: 60px;
+  background: transparent !important;
+}
+
+/* ---- Topnav base ---- */
+#topnav {
+  height: 56px;
+  background-color: rgba(15, 15, 15, 0.85);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  z-index: 1030;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+[data-mode="light"] #topnav {
+  background-color: rgba(245, 245, 245, 0.85);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+#topnav.nav-hidden {
+  transform: translateY(-100%);
+  opacity: 0;
+}
+
+/* Site title in navbar */
+#topnav .site-title-nav {
+  font-size: 1.2rem;
+  font-weight: 900;
+  color: var(--site-title-color);
+  letter-spacing: 0.3px;
+  white-space: nowrap;
+}
+
+/* Nav links */
+#topnav .navbar-nav .nav-link {
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.4px;
+  color: var(--sidebar-btn-color);
+  padding: 0.4rem 0.85rem;
+  border-radius: 6px;
+  transition: background-color 0.2s, color 0.2s;
+
+  &:hover {
+    background-color: var(--sidebar-hover-bg);
+    color: var(--sidebar-active-color);
+  }
+}
+
+#topnav .navbar-nav .nav-item.active .nav-link {
+  color: var(--sidebar-active-color);
+  background-color: var(--sidebar-hover-bg);
+}
+
+/* ---- Search bar ---- */
+/* Override Chirpy: always show search bar in topnav */
+#topnav #search {
+  display: flex !important;
+  align-items: center;
+  border: 1px solid var(--search-border-color);
+  border-radius: 1rem;
+  background: var(--main-bg);
+  padding: 0 0.6rem;
+  width: 200px;
+  max-width: 220px;
+  transition: width 0.3s ease;
+
+  &:focus-within {
+    width: 260px;
+    border-color: var(--sidebar-active-color);
+  }
+
+  i {
+    font-size: 0.85rem;
+    color: var(--search-icon-color);
+    flex-shrink: 0;
+  }
+}
+
+#search-input {
+  border: 0 !important;
+  background: transparent !important;
+  color: var(--text-color) !important;
+  font-size: 0.85rem;
+  padding: 0.2rem 0.4rem;
+  height: auto;
+  width: 100%;
+  box-shadow: none !important;
+
+  &:focus { outline: none; }
+}
+
+/* Results panel — anchored below the topnav */
+#search-result-wrapper {
+  margin-top: 1.5rem;
+}
+
+#search-cancel {
+  font-size: 0.85rem;
+  color: var(--text-muted-color) !important;
+  padding: 0.2rem 0.4rem;
+}
+
+/* Icon buttons (search, mode toggle) */
+#topnav .nav-icon-btn {
+  color: var(--sidebar-btn-color);
+  font-size: 1rem;
+  padding: 0.3rem 0.5rem;
+  border-radius: 50%;
+  background-color: var(--sidebar-btn-bg);
+  width: 2rem;
+  height: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--sidebar-border-color) 0 0 0 1px;
+
+  &:hover {
+    background-color: var(--sidebar-hover-bg);
+    color: var(--sidebar-active-color);
+  }
+}
+
+/* Mobile toggler */
+#topnav .navbar-toggler {
+  border: 1px solid var(--sidebar-border-color);
+  color: var(--sidebar-btn-color);
+  padding: 0.3rem 0.6rem;
+
+  &:focus { box-shadow: none; }
+}
+
+/* Avatar in navbar */
+#topnav .navbar-brand img {
+  object-fit: cover;
+}
+
+/* =============================================
+   HERO FEATURED CAROUSEL
+   ============================================= */
+
+#hero-carousel {
+  position: relative;
+  width: 100%;
+}
+
+/* Track clips the slides */
+.hero-track {
+  position: relative;
+  width: 100%;
+  height: 340px;
+  border-radius: 14px;
+  overflow: hidden;
+  background: var(--card-bg);
+}
+
+/* Each slide */
+.hero-slide {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transform: translateX(60px);
+  transition: opacity 0.55s ease, transform 0.55s ease;
+  pointer-events: none;
+}
+
+.hero-slide.active {
+  opacity: 1;
+  transform: translateX(0);
+  pointer-events: auto;
+}
+
+.hero-slide.exit {
+  opacity: 0;
+  transform: translateX(-60px);
+}
+
+.hero-slide-link {
+  display: block;
+  width: 100%;
+  height: 100%;
+  text-decoration: none;
+  color: inherit;
+  position: relative;
+}
+
+/* Background image */
+.hero-bg {
+  position: absolute;
+  inset: 0;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+
+.hero-bg-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 5rem;
+  color: var(--text-muted-color);
+  opacity: 0.15;
+  background: var(--card-bg);
+}
+
+/* Dark gradient over image */
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to top,
+    rgba(0,0,0,0.88) 0%,
+    rgba(0,0,0,0.45) 50%,
+    rgba(0,0,0,0.05) 100%
+  );
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 2rem 2.2rem;
+  gap: 0.4rem;
+}
+
+.hero-title {
+  font-size: 1.75rem;
+  font-weight: 800;
+  color: #fff;
+  line-height: 1.25;
+  margin: 0;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.5);
+}
+
+.hero-excerpt {
+  font-size: 0.92rem;
+  color: rgba(255,255,255,0.8);
+  margin: 0;
+  line-height: 1.55;
+  max-width: 680px;
+}
+
+.hero-meta {
+  font-size: 0.8rem;
+  color: rgba(255,255,255,0.6);
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.hero-btn {
+  display: inline-block;
+  margin-top: 0.5rem;
+  background: var(--sidebar-active-color, #e63946);
+  color: #fff;
+  font-size: 0.85rem;
+  font-weight: 700;
+  padding: 0.45rem 1.1rem;
+  border-radius: 6px;
+  width: fit-content;
+  transition: opacity 0.2s;
+
+  &:hover { opacity: 0.85; }
+}
+
+/* Dot indicators */
+.hero-dots {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 0.85rem;
+}
+
+.hero-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  border: none;
+  background: var(--text-muted-color);
+  opacity: 0.4;
+  padding: 0;
+  cursor: pointer;
+  transition: opacity 0.25s, transform 0.25s, background 0.25s;
+
+  &.active {
+    opacity: 1;
+    transform: scale(1.3);
+    background: #fff;
+  }
+
+  &:hover { opacity: 0.75; }
+}
+
+/* =============================================
+   POST CARDS GRID
+   ============================================= */
+
+#post-grid {
+  padding-top: 1.5rem;
+}
+
+.post-card-link {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+  height: 100%;
+}
+
+.post-card {
+  background-color: var(--card-bg);
+  border: 1px solid var(--card-border-color);
+  border-radius: 12px;
+  overflow: hidden;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  cursor: pointer;
+}
+
+.post-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+}
+
+/* Thumbnail */
+.post-card-img {
+  width: 100%;
+  height: 180px;
+  overflow: hidden;
+  background-color: var(--sidebar-bg);
+}
+
+.post-card-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.post-card:hover .post-card-img img {
+  transform: scale(1.04);
+}
+
+.post-card-img-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-muted-color);
+  font-size: 2.5rem;
+  opacity: 0.3;
+}
+
+/* Card body */
+.post-card-body {
+  padding: 1rem 1.1rem 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+/* Category badges */
+.post-card-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.post-card-badge {
+  font-size: 0.72rem;
+  font-weight: 600;
+  padding: 0.2rem 0.65rem;
+  border-radius: 20px;
+  background-color: var(--tag-bg);
+  color: var(--tag-border-color);
+  letter-spacing: 0.3px;
+  text-transform: capitalize;
+}
+
+/* Title */
+.post-card-title {
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1.4;
+  margin: 0;
+  color: var(--heading-color);
+}
+
+/* Excerpt */
+.post-card-excerpt {
+  font-size: 0.85rem;
+  color: var(--text-muted-color);
+  line-height: 1.55;
+  margin: 0;
+  flex-grow: 1;
+}
+
+/* Date */
+.post-card-meta {
+  font-size: 0.78rem;
+  color: var(--text-muted-color);
+  margin-top: 0.25rem;
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+/* =============================================
+   CATEGORIES NAV DROPDOWN
+   ============================================= */
+
+.nav-dropdown {
+  position: relative;
+}
+
+.nav-dropdown-toggle {
+  display: flex !important;
+  align-items: center;
+  gap: 0.2rem;
+  cursor: pointer;
+}
+
+.dropdown-arrow {
+  font-size: 0.65rem;
+  transition: transform 0.2s ease;
+}
+
+.nav-dropdown:hover .dropdown-arrow {
+  transform: rotate(180deg);
+}
+
+/* Show on hover */
+.nav-dropdown:hover .nav-cat-dropdown {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+/* Make the toggle look like a nav-link but non-clickable */
+.nav-dropdown-toggle {
+  cursor: default !important;
+  user-select: none;
+}
+
+.nav-cat-dropdown {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  transform: translateY(-6px);
+  z-index: 500;
+  background: var(--card-bg);
+  border: 1px solid var(--card-border-color);
+  border-radius: 10px;
+  padding: 0.5rem 0.4rem;
+  min-width: 220px;
+  box-shadow: 0 8px 28px rgba(0,0,0,0.45);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.2rem;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.18s ease, transform 0.18s ease, visibility 0.18s;
+}
+
+/* Keep open while hovering dropdown itself */
+.nav-cat-dropdown:hover {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.nav-cat-item {
+  background: none;
+  border: none;
+  text-align: center;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--text-muted-color);
+  padding: 0.45rem 0.6rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+  white-space: nowrap;
+
+  &:hover {
+    background: var(--sidebar-hover-bg);
+    color: var(--sidebar-active-color);
+  }
+}
+
+/* Active filter bar */
+#category-filter-bar {
+  padding: 0.5rem 0.2rem;
+}
+
+.filter-label {
+  font-size: 0.82rem;
+  color: var(--text-muted-color);
+}
+
+.active-badge {
+  background-color: var(--sidebar-active-color) !important;
+  color: #fff !important;
+  font-size: 0.78rem !important;
+}
+
+#clear-filter {
+  font-size: 0.78rem;
+  color: var(--text-muted-color);
+  text-decoration: none;
+
+  &:hover { color: var(--sidebar-active-color); }
+}
+
+/* Widen main content to use full available space */
+#post-grid .row {
+  max-width: 100%;
+}
+
+main.col-12.col-lg-11.col-xl-9 {
+  max-width: 100% !important;
+  flex: 0 0 100% !important;
+}

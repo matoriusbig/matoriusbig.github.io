@@ -1,0 +1,257 @@
+---
+layout: default
+---
+
+{% include lang.html %}
+
+{% assign all_pinned = site.posts | where: 'pin', 'true' %}
+{% assign all_normal = site.posts | where_exp: 'item', 'item.pin != true and item.hidden != true' %}
+{% assign posts = '' | split: '' %}
+
+{% assign visible_start = paginator.page | minus: 1 | times: paginator.per_page %}
+{% assign visible_end = visible_start | plus: paginator.per_page %}
+
+{% if all_pinned.size > visible_start %}
+  {% if all_pinned.size > visible_end %}
+    {% assign pinned_size = paginator.per_page %}
+  {% else %}
+    {% assign pinned_size = all_pinned.size | minus: visible_start %}
+  {% endif %}
+  {% for i in (visible_start..all_pinned.size) limit: pinned_size %}
+    {% assign posts = posts | push: all_pinned[i] %}
+  {% endfor %}
+{% else %}
+  {% assign pinned_size = 0 %}
+{% endif %}
+
+{% assign normal_size = paginator.posts | size | minus: pinned_size %}
+{% if normal_size > 0 %}
+  {% if pinned_size > 0 %}
+    {% assign normal_start = 0 %}
+  {% else %}
+    {% assign normal_start = visible_start | minus: all_pinned.size %}
+  {% endif %}
+  {% assign normal_end = normal_start | plus: normal_size | minus: 1 %}
+  {% for i in (normal_start..normal_end) %}
+    {% assign posts = posts | push: all_normal[i] %}
+  {% endfor %}
+{% endif %}
+
+<!-- Build full category list from all posts -->
+{% assign all_categories = '' | split: '' %}
+{% for post in site.posts %}
+  {% for cat in post.categories %}
+    {% unless all_categories contains cat %}
+      {% assign all_categories = all_categories | push: cat %}
+    {% endunless %}
+  {% endfor %}
+{% endfor %}
+
+<!-- ======================== HERO BANNER ======================== -->
+<div id="hero-banner">
+  <pre class="caravela-art" aria-label="Skull ASCII art">
+            __###########__
+          _#@#@@&(#)&@@#@#_
+         /#@# ##       ## #\
+        /#@# ## [##][##] ## \
+       |#@# ###  [##][##] ###|
+       |#@# ###    \_|_/   ##|
+       |#@# ###  .-------.  #|
+       |#@# ### /  -----  \ #|
+       |#@# ## | |_|   |_| |#|
+        \@##\__|\\       //|_/
+     _XX_'--'--'\\     //'--'_XX_
+    /0XX \   \   \\   //   /  XX0\
+   /XXXX  \___\   \\ //   /___XXXX\
+  /__XX____\   \___\/___/    XX___\
+  </pre>
+  <div class="banner-text-wrap">
+    <h1 class="banner-title">Root Directory!</h1>
+    <p class="banner-sub">by: matoriusbig</p>
+  </div>
+</div>
+<!-- ============================================================ -->
+
+<!-- ===================== FEATURED CAROUSEL ===================== -->
+{% assign featured_posts = site.posts | where: 'featured', true %}
+{% if featured_posts.size == 0 %}
+  {% assign featured_posts = site.posts | limit: 3 %}
+{% endif %}
+{% assign side_post = posts | first %}
+
+<div class="row g-4 mb-5" id="hero-row">
+
+  <!-- Carousel: 2/3 del ancho -->
+  <div class="col-12 col-lg-8">
+    <div id="hero-carousel">
+      <div class="hero-track">
+        {% for post in featured_posts %}
+          {% assign fsrc = post.image.path | default: post.image %}
+          {% if post.media_subpath and fsrc and fsrc != '' %}
+            {% unless fsrc contains '://' %}
+              {% assign fsrc = post.media_subpath | append: '/' | append: fsrc | replace: '///', '/' | replace: '//', '/' %}
+            {% endunless %}
+          {% endif %}
+
+          <div class="hero-slide{% if forloop.first %} active{% endif %}">
+            <a href="{{ post.url | relative_url }}" class="hero-slide-link">
+              <div class="hero-bg">
+                {% if fsrc and fsrc != '' %}
+                  <img src="{{ fsrc }}" alt="{{ post.title }}">
+                {% else %}
+                  <div class="hero-bg-placeholder"><i class="fas fa-newspaper"></i></div>
+                {% endif %}
+              </div>
+              <div class="hero-overlay">
+                {% if post.categories.size > 0 %}
+                  <div class="hero-badges mb-2">
+                    {% for cat in post.categories limit:2 %}
+                      <span class="post-card-badge">{{ cat }}</span>
+                    {% endfor %}
+                  </div>
+                {% endif %}
+                <h2 class="hero-title">{{ post.title }}</h2>
+                <p class="hero-excerpt">
+                  {%- if post.description -%}{{ post.description | truncate: 150 }}
+                  {%- else -%}{{ post.content | markdownify | strip_html | strip_newlines | truncate: 150 }}
+                  {%- endif -%}
+                </p>
+                <div class="hero-meta">
+                  <i class="far fa-calendar-alt fa-fw"></i>
+                  {% include datetime.html date=post.date lang=lang %}
+                </div>
+                <span class="hero-btn">Leer artículo →</span>
+              </div>
+            </a>
+          </div>
+        {% endfor %}
+      </div>
+      <!-- Dots -->
+      <div class="hero-dots">
+        {% for post in featured_posts %}
+          <button class="hero-dot{% if forloop.first %} active{% endif %}" data-index="{{ forloop.index0 }}" aria-label="Slide {{ forloop.index }}"></button>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+
+  <!-- Card lateral: 1/3 del ancho -->
+  {% if side_post %}
+    {% assign sp_src = side_post.image.path | default: side_post.image %}
+    {% if side_post.media_subpath and sp_src and sp_src != '' %}
+      {% unless sp_src contains '://' %}
+        {% assign sp_src = side_post.media_subpath | append: '/' | append: sp_src | replace: '///', '/' | replace: '//', '/' %}
+      {% endunless %}
+    {% endif %}
+    {% assign sp_cats = side_post.categories | join: ',' %}
+    <div class="col-12 col-lg-4 d-flex">
+      <a href="{{ side_post.url | relative_url }}" class="post-card-link w-100">
+        <article class="post-card h-100">
+          <div class="post-card-img">
+            {% if sp_src and sp_src != '' %}
+              <img src="{{ sp_src }}" alt="{{ side_post.title }}" loading="lazy">
+            {% else %}
+              <div class="post-card-img-placeholder"><i class="fas fa-file-alt"></i></div>
+            {% endif %}
+          </div>
+          <div class="post-card-body">
+            {% if side_post.categories.size > 0 %}
+              <div class="post-card-tags">
+                {% for cat in side_post.categories limit:2 %}
+                  <span class="post-card-badge">{{ cat }}</span>
+                {% endfor %}
+              </div>
+            {% endif %}
+            <h2 class="post-card-title">{{ side_post.title }}</h2>
+            <p class="post-card-excerpt">
+              {%- if side_post.description -%}{{ side_post.description | truncate: 120 }}
+              {%- else -%}{{ side_post.content | markdownify | strip_html | strip_newlines | truncate: 120 }}
+              {%- endif -%}
+            </p>
+            <div class="post-card-meta">
+              <i class="far fa-calendar-alt fa-fw"></i>
+              {% include datetime.html date=side_post.date lang=lang %}
+            </div>
+          </div>
+        </article>
+      </a>
+    </div>
+  {% endif %}
+
+</div>
+<!-- ============================================================ -->
+
+<!-- Active filter bar -->
+<div id="category-filter-bar" class="d-none mb-4 d-flex align-items-center gap-2 flex-wrap">
+  <span class="filter-label"><i class="fas fa-filter fa-fw"></i> Filtrando:</span>
+  <span id="active-filter-name" class="post-card-badge active-badge"></span>
+  <button id="clear-filter" class="btn btn-sm btn-link p-0">✕ Ver todos</button>
+</div>
+
+<div id="post-grid" class="flex-grow-1 px-xl-1">
+  <div class="row g-4">
+    {% for post in posts %}
+      {% assign src = post.image.path | default: post.image %}
+      {% if post.media_subpath and src and src != '' %}
+        {% unless src contains '://' %}
+          {% assign src = post.media_subpath | append: '/' | append: src | replace: '///', '/' | replace: '//', '/' %}
+        {% endunless %}
+      {% endif %}
+
+      {% assign post_cats = post.categories | join: ',' %}
+
+      <div class="col-12 col-sm-6 col-lg-4 post-card-col" data-categories="{{ post_cats }}">
+        <a href="{{ post.url | relative_url }}" class="post-card-link">
+          <article class="post-card h-100">
+
+            <!-- Thumbnail -->
+            <div class="post-card-img">
+              {% if src and src != '' %}
+                <img src="{{ src }}" alt="{{ post.image.alt | default: post.title }}" loading="lazy">
+              {% else %}
+                <div class="post-card-img-placeholder">
+                  <i class="fas fa-file-alt"></i>
+                </div>
+              {% endif %}
+            </div>
+
+            <div class="post-card-body">
+              <!-- Category badges -->
+              {% if post.categories.size > 0 %}
+                <div class="post-card-tags">
+                  {% for category in post.categories limit:2 %}
+                    <span class="post-card-badge">{{ category }}</span>
+                  {% endfor %}
+                </div>
+              {% endif %}
+
+              <!-- Title -->
+              <h2 class="post-card-title">{{ post.title }}</h2>
+
+              <!-- Excerpt -->
+              <p class="post-card-excerpt">
+                {%- if post.description -%}
+                  {{ post.description | truncate: 120 }}
+                {%- else -%}
+                  {{ post.content | markdownify | strip_html | strip_newlines | truncate: 120 }}
+                {%- endif -%}
+              </p>
+
+              <!-- Date -->
+              <div class="post-card-meta">
+                <i class="far fa-calendar-alt fa-fw"></i>
+                {% include datetime.html date=post.date lang=lang %}
+              </div>
+            </div>
+
+          </article>
+        </a>
+      </div>
+    {% endfor %}
+  </div>
+</div>
+
+{% if paginator.total_pages > 1 %}
+  {% include post-paginator.html %}
+{% endif %}
+

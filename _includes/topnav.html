@@ -1,0 +1,89 @@
+<!-- Top Navigation Bar -->
+
+{% assign all_categories = '' | split: '' %}
+{% for post in site.posts %}
+  {% for cat in post.categories %}
+    {% unless all_categories contains cat %}
+      {% assign all_categories = all_categories | push: cat %}
+    {% endunless %}
+  {% endfor %}
+{% endfor %}
+
+<nav id="topnav" class="navbar navbar-expand-lg fixed-top">
+  <div class="container-fluid px-4">
+
+    <!-- Logo + Title -->
+    <a class="navbar-brand d-flex align-items-center gap-2" href="{{ '/' | relative_url }}">
+      {%- if site.avatar != empty and site.avatar -%}
+        {%- capture avatar_url -%}{% include media-url.html src=site.avatar %}{%- endcapture -%}
+        <img src="{{- avatar_url -}}" width="36" height="36" alt="avatar" class="rounded-circle" onerror="this.style.display='none'">
+      {%- endif -%}
+      <span class="site-title-nav">{{ site.title }}</span>
+    </a>
+
+    <!-- Mobile toggle -->
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarLinks" aria-controls="navbarLinks" aria-expanded="false" aria-label="Toggle navigation">
+      <i class="fas fa-bars"></i>
+    </button>
+
+    <!-- Nav links + Search -->
+    <div class="collapse navbar-collapse" id="navbarLinks">
+      <ul class="navbar-nav mx-auto">
+        <!-- Home -->
+        <li class="nav-item{% if page.layout == 'home' %} active{% endif %}">
+          <a class="nav-link" href="{{ '/' | relative_url }}">
+            {{ site.data.locales[include.lang].tabs.home | default: 'Home' | upcase }}
+          </a>
+        </li>
+
+        <!-- Tabs: Categories gets a dropdown, rest render normally -->
+        {% assign visible_tabs = site.tabs | where_exp: "tab", "tab.hidden != true" %}
+        {% for tab in visible_tabs %}
+          {% capture tab_name %}{{ tab.url | split: '/' }}{% endcapture %}
+          {% if tab_name == 'categories' %}
+            <li class="nav-item nav-dropdown{% if tab.url == page.url %} active{% endif %}">
+              <span class="nav-link nav-dropdown-toggle">
+                {{ tab.title | upcase }}
+                <i class="fas fa-chevron-down fa-xs ms-1 dropdown-arrow"></i>
+              </span>
+              <div class="nav-cat-dropdown">
+                {% for cat in all_categories %}
+                  <button class="nav-cat-item" data-cat="{{ cat }}">{{ cat }}</button>
+                {% endfor %}
+              </div>
+            </li>
+          {% else %}
+            <li class="nav-item{% if tab.url == page.url %} active{% endif %}">
+              <a class="nav-link" href="{{ tab.url | relative_url }}">
+                {{ tab.title | default: site.data.locales[include.lang].tabs.[tab_name] | upcase }}
+              </a>
+            </li>
+          {% endif %}
+        {% endfor %}
+      </ul>
+
+      <!-- Search + Mode toggle -->
+      <div class="d-flex align-items-center gap-2">
+        <button type="button" id="search-trigger" class="d-none" aria-label="Search"></button>
+        <search id="search" class="align-items-center">
+          <i class="fas fa-search fa-fw"></i>
+          <input
+            class="form-control"
+            id="search-input"
+            type="search"
+            aria-label="search"
+            autocomplete="off"
+            placeholder="{{ site.data.locales[include.lang].search.hint | default: 'Search' | capitalize }}..."
+          >
+        </search>
+        <button type="button" class="btn btn-link text-decoration-none d-none" id="search-cancel">✕</button>
+        {% unless site.theme_mode %}
+          <button type="button" class="btn btn-link nav-icon-btn" id="mode-toggle" aria-label="Switch Mode">
+            <i class="fas fa-adjust"></i>
+          </button>
+        {% endunless %}
+      </div>
+    </div>
+
+  </div>
+</nav>
