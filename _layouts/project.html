@@ -1,0 +1,41 @@
+---
+layout: default
+---
+
+{% include lang.html %}
+
+<div class="project-detail">
+
+  <!-- Header -->
+  <div class="section-header">
+    <h1 class="section-glitch-title" style="font-size: clamp(0.75rem, 2.2vw, 1.1rem); white-space: normal; text-align:center;">{{ page.title }}</h1>
+    <div class="section-header-line"></div>
+  </div>
+
+  <!-- Meta bar -->
+  <div class="project-meta-bar">
+    <span class="project-lang-dot" style="background:{{ page.language_color | default: '#888' }};"></span>
+    <span class="project-lang-name">{{ page.language }}</span>
+
+    {% for tag in page.tags %}
+      <span class="post-card-badge">{{ tag }}</span>
+    {% endfor %}
+
+    {% if page.github_repo %}
+      <a href="https://github.com/{{ page.github_repo }}" target="_blank" rel="noopener" class="project-gh-btn">
+        <i class="fab fa-github fa-fw"></i> Ver en GitHub
+      </a>
+    {% endif %}
+  </div>
+
+  <!-- README content -->
+  <div class="project-readme">
+    <div class="project-readme-header">
+      <i class="fas fa-book-open fa-fw"></i> README.md
+    </div>
+    <div class="project-readme-body">
+      {{ content }}
+    </div>
+  </div>
+
+</div>

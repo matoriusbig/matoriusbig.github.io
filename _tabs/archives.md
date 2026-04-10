@@ -1,6 +1,6 @@
 ---
-layout: archives
-icon: fas fa-archive
+layout: proyectos
+icon: fas fa-code
 order: 4
-title: Recursos
+title: Proyectos
 ---
