@@ -385,6 +385,34 @@ body {
   white-space: nowrap;
 }
 
+/* Forzar navbar siempre expandida en desktop
+   (Bootstrap navbar-expand-lg no siempre se aplica en producción) */
+#topnav .navbar-toggler {
+  display: none !important;
+}
+#topnav .navbar-collapse {
+  display: flex !important;
+  flex-basis: auto !important;
+  align-items: center !important;
+  flex-grow: 1 !important;
+}
+
+/* En móvil pequeño (<768px): permitir hamburger */
+@media (max-width: 767.98px) {
+  #topnav .navbar-toggler {
+    display: inline-flex !important;
+  }
+  #topnav .navbar-collapse:not(.show) {
+    display: none !important;
+  }
+  #topnav .navbar-collapse.show {
+    display: flex !important;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 0.5rem 0 1rem;
+  }
+}
+
 /* Nav links */
 #topnav .navbar-nav .nav-link {
   font-size: 0.82rem;
