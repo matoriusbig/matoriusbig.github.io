@@ -15,6 +15,13 @@ layout: compress
   {% include head.html lang=lang %}
 
   <body>
+  <script>
+      var s = document.getElementById('sidebar');
+      var t = document.getElementById('topbar-wrapper');
+      if (s) { s.style.cssText = 'display:none!important'; }
+      if (t) { t.style.cssText = 'display:none!important'; }
+    </script>
+    
     {% include topnav.html lang=lang %}
 
     <div id="main-wrapper" class="d-flex justify-content-center">

@@ -336,9 +336,12 @@ body {
 }
 
 /* Hide original sidebar and topbar */
-#sidebar,
-#topbar-wrapper {
+html body #sidebar,
+html body #sidebar.d-flex,
+html body #topbar-wrapper,
+html body #topbar-wrapper.d-flex {
   display: none !important;
+  visibility: hidden !important;
 }
 
 /* Remove sidebar left margin from main wrapper */
