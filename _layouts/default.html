@@ -15,6 +15,10 @@ layout: compress
   {% include head.html lang=lang %}
 
   <body>
+    <!-- Placeholders ocultos: Chirpy JS (home.min.js) busca estos elementos -->
+    <div id="sidebar" class="d-none"></div>
+    <button id="sidebar-trigger" class="d-none"></button>
+
     {% include topnav.html lang=lang %}
 
     <div id="main-wrapper" class="d-flex justify-content-center">

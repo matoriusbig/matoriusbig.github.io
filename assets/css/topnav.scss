@@ -388,7 +388,7 @@ html body #topbar-wrapper.d-flex {
   white-space: nowrap;
 }
 
-/* Navbar links container — NO Bootstrap collapse, sin dependencia de JS externo */
+/* Navbar links — Chirpy no incluye Bootstrap .navbar CSS, se define todo aquí */
 #topnav .navbar-toggler {
   display: none !important;
 }
@@ -397,6 +397,18 @@ html body #topbar-wrapper.d-flex {
   flex-basis: auto;
   align-items: center;
   flex-grow: 1;
+}
+#topnav .navbar-nav {
+  display: flex;
+  flex-direction: row;
+  list-style: none;
+  padding-left: 0;
+  margin: 0;
+  align-items: center;
+  gap: 0.15rem;
+}
+#topnav .nav-item {
+  list-style: none;
 }
 
 /* Móvil (<768px): hamburger + toggle manual */
@@ -413,6 +425,10 @@ html body #topbar-wrapper.d-flex {
     align-items: flex-start;
     width: 100%;
     padding: 0.5rem 0 1rem;
+  }
+  #topnav .navbar-nav {
+    flex-direction: column;
+    width: 100%;
   }
 }
 
