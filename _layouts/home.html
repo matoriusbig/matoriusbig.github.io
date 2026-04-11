@@ -123,7 +123,7 @@ layout: default
         <article class="post-card h-100">
           <div class="post-card-img">
             {% if sp_src and sp_src != '' %}
-              <img src="{{ sp_src }}" alt="{{ side_post.title }}" loading="lazy">
+              <div class="post-card-thumb" style="background-image:url('{{ sp_src }}')"></div>
             {% else %}
               <div class="post-card-img-placeholder"><i class="fas fa-file-alt"></i></div>
             {% endif %}
@@ -174,7 +174,7 @@ layout: default
             <!-- Thumbnail -->
             <div class="post-card-img">
               {% if src and src != '' %}
-                <img src="{{ src }}" alt="{{ post.image.alt | default: post.title }}" loading="lazy">
+                <div class="post-card-thumb" style="background-image:url('{{ src }}')"></div>
               {% else %}
                 <div class="post-card-img-placeholder">
                   <i class="fas fa-file-alt"></i>
