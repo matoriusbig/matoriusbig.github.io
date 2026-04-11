@@ -17,6 +17,16 @@
   }, { passive: true });
 })();
 
+// === 1b. Mobile navbar toggle (sin Bootstrap collapse) ===
+(function () {
+  var toggler = document.getElementById('navbarToggler');
+  var links = document.getElementById('navbarLinks');
+  if (!toggler || !links) return;
+  toggler.addEventListener('click', function () {
+    links.classList.toggle('show');
+  });
+})();
+
 // === 2. Dark / Light mode toggle ===
 document.addEventListener('DOMContentLoaded', function () {
   var btn = document.getElementById('mode-toggle');
@@ -145,4 +155,3 @@ document.addEventListener('DOMContentLoaded', function () {
     if (e.key === 'Escape') hideResults();
   });
 });
-})();

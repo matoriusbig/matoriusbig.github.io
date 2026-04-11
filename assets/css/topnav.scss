@@ -388,30 +388,30 @@ html body #topbar-wrapper.d-flex {
   white-space: nowrap;
 }
 
-/* Forzar navbar siempre expandida en desktop
-   (Bootstrap navbar-expand-lg no siempre se aplica en producción) */
+/* Navbar links container — NO Bootstrap collapse, sin dependencia de JS externo */
 #topnav .navbar-toggler {
   display: none !important;
 }
-#topnav .navbar-collapse {
+#topnav .topnav-links {
   display: flex !important;
-  flex-basis: auto !important;
-  align-items: center !important;
-  flex-grow: 1 !important;
+  flex-basis: auto;
+  align-items: center;
+  flex-grow: 1;
 }
 
-/* En móvil pequeño (<768px): permitir hamburger */
+/* Móvil (<768px): hamburger + toggle manual */
 @media (max-width: 767.98px) {
   #topnav .navbar-toggler {
     display: inline-flex !important;
   }
-  #topnav .navbar-collapse:not(.show) {
+  #topnav .topnav-links {
     display: none !important;
   }
-  #topnav .navbar-collapse.show {
+  #topnav .topnav-links.show {
     display: flex !important;
     flex-direction: column;
     align-items: flex-start;
+    width: 100%;
     padding: 0.5rem 0 1rem;
   }
 }
