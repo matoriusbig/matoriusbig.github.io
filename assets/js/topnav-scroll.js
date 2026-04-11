@@ -27,15 +27,7 @@
   });
 })();
 
-// === 2. Dark / Light mode toggle ===
-document.addEventListener('DOMContentLoaded', function () {
-  var btn = document.getElementById('mode-toggle');
-  if (btn && typeof Theme !== 'undefined') {
-    btn.addEventListener('click', function () { Theme.flip(); });
-  }
-});
-
-// === 3. Hero Featured Carousel ===
+// === 2. Hero Featured Carousel ===
 document.addEventListener('DOMContentLoaded', function () {
   var slides = document.querySelectorAll('.hero-slide');
   var dots   = document.querySelectorAll('.hero-dot');
@@ -82,42 +74,7 @@ document.addEventListener('DOMContentLoaded', function () {
   startTimer();
 });
 
-// === 4. Category filter from nav dropdown ===
-document.addEventListener('DOMContentLoaded', function () {
-  document.querySelectorAll('.nav-cat-item').forEach(function (btn) {
-    btn.addEventListener('click', function (e) {
-      e.preventDefault();
-      e.stopPropagation();
-      var cat = btn.getAttribute('data-cat');
-      // Only filter if on home page
-      var cols = document.querySelectorAll('.post-card-col');
-      if (!cols.length) return;
-      cols.forEach(function (col) {
-        var cats = col.getAttribute('data-categories').split(',');
-        col.style.display = cats.includes(cat) ? '' : 'none';
-      });
-      var bar = document.getElementById('category-filter-bar');
-      if (bar) {
-        bar.classList.remove('d-none');
-        bar.classList.add('d-flex');
-        document.getElementById('active-filter-name').textContent = cat;
-      }
-    });
-  });
-
-  var clearBtn = document.getElementById('clear-filter');
-  if (clearBtn) {
-    clearBtn.addEventListener('click', function () {
-      document.querySelectorAll('.post-card-col').forEach(function (col) {
-        col.style.display = '';
-      });
-      var bar = document.getElementById('category-filter-bar');
-      if (bar) { bar.classList.add('d-none'); bar.classList.remove('d-flex'); }
-    });
-  }
-});
-
-// === 5. Search results toggle ===
+// === 3. Search results toggle ===
 document.addEventListener('DOMContentLoaded', function () {
   var input   = document.getElementById('search-input');
   var wrapper = document.getElementById('search-result-wrapper');

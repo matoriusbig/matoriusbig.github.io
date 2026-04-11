@@ -37,16 +37,6 @@ layout: default
   {% endfor %}
 {% endif %}
 
-<!-- Build full category list from all posts -->
-{% assign all_categories = '' | split: '' %}
-{% for post in site.posts %}
-  {% for cat in post.categories %}
-    {% unless all_categories contains cat %}
-      {% assign all_categories = all_categories | push: cat %}
-    {% endunless %}
-  {% endfor %}
-{% endfor %}
-
 <!-- ======================== HERO BANNER ======================== -->
 <div id="hero-banner">
   <div class="banner-inner">
@@ -164,13 +154,6 @@ layout: default
 
 </div>
 <!-- ============================================================ -->
-
-<!-- Active filter bar -->
-<div id="category-filter-bar" class="d-none mb-4 d-flex align-items-center gap-2 flex-wrap">
-  <span class="filter-label"><i class="fas fa-filter fa-fw"></i> Filtrando:</span>
-  <span id="active-filter-name" class="post-card-badge active-badge"></span>
-  <button id="clear-filter" class="btn btn-sm btn-link p-0">✕ Ver todos</button>
-</div>
 
 <div id="post-grid" class="flex-grow-1 px-xl-1">
   <div class="row g-4">
