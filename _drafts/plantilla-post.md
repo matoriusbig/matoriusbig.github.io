@@ -8,21 +8,22 @@
 title: "Título del Post"          # Aparece en la card, el navegador y SEO
 date: 2026-01-01 10:00:00 -0400   # Fecha real de publicación. -0400 = hora Chile
 
-# CATEGORÍAS — elige según la sección del blog:
-#   Write-up    → [Write-up, HackTheBox]  |  [Write-up, TryHackMe]
-#   Cheat Sheet → [Cheat Sheet, Reconocimiento]  |  [Cheat Sheet, Explotación]
-categories: [Write-up, HackTheBox]
+# SECCIÓN — elige UNO:
+#   Write-up    → categories: [Write-up]        (con: [Write-up, HackTheBox] etc.)
+#   Cheat Sheet → categories: [Cheat Sheet]
+#   Proyecto    → categories: [Proyecto]
+categories: [Write-up]
 
-# TAGS — en minúsculas, sin espacios (usa guiones: sql-injection)
-tags: [tag1, tag2, tag3]
+# TAGS — palabras clave para búsqueda interna. Ej: [nmap, linux, privesc]
+tags: [tag1, tag2]
 
-# DESCRIPCIÓN — 1-2 frases. Aparece en la card y en Google. Máx 160 caracteres.
-description: "Descripción corta del post que aparece en las cards y en los resultados de búsqueda."
+# DESCRIPCIÓN — 1-2 frases cortas. Máx 160 caracteres.
+description: "Descripción corta del post."
 
-# MINIATURA — ver instrucciones abajo en la sección [IMÁGENES]
+# MINIATURA — solo el nombre del archivo (la carpeta assets/img/posts/ es automática)
 image:
-  path: /assets/img/posts/nombre-imagen.png
-  alt: "Descripción breve de la imagen"
+  path: nombre-imagen.png
+  alt: "Descripción de la imagen"
 
 # CARRUSEL — pon true si quieres que aparezca en el carrusel del home
 featured: false
@@ -52,19 +53,20 @@ toc: true
   En Obsidian: abre la carpeta del blog como vault,
   navega a _posts/ y crea el archivo ahí directamente.
 
-  ③ IMÁGENES (miniatura)
-  ────────────────────────
-  1. Prepara una imagen de 1200×630 px (ratio 16:9).
-     Formatos: .png · .jpg · .webp
-  2. Cópiala a la carpeta:  assets/img/posts/
-  3. En el front matter, escribe el nombre exacto:
-       image:
-         path: /assets/img/posts/nombre-exacto.png
-  4. Si el post NO tiene imagen, borra todo el bloque "image:"
-     y se mostrará un ícono de placeholder en la card.
+  ③ IMÁGENES
+  ────────────────
+  Todas las imágenes van en:  assets/img/posts/
 
-  Imágenes dentro del contenido:
-    ![Descripción](/assets/img/posts/captura.png)
+  MINIATURA (front matter):
+    image:
+      path: nombre-imagen.png        ← solo el nombre, sin ruta
+      alt: "Descripción"
+
+  Imágenes dentro del contenido (igual que Obsidian):
+    ![Descripción](captura.png)      ← solo el nombre del archivo
+
+  Tamaño recomendado para miniaturas: 1200×630 px (16:9)
+  Formatos: .png · .jpg · .webp
 
   ④ PUBLICAR EN GITHUB (paso a paso)
   ─────────────────────────────────────

@@ -1075,40 +1075,24 @@ article .dynamic-title {
    POST / ARTICLE — contenido con fondo
    ============================================= */
 
-/* Bloque semi-transparente — cubre TODO el article */
+/* Article layout — header (miniatura + título) FUERA del bloque */
 main > article.px-1 {
-  position: relative;
-  border-radius: 14px;
   padding: 0 2rem 2rem !important;
   margin-bottom: 1.5rem;
-  overflow: visible;
-
-  /* Caja visual que empieza justo bajo el header */
-  &::before {
-    content: '';
-    position: absolute;
-    top: var(--article-content-top, 180px);
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(255, 255, 255, 0.055);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 14px;
-    pointer-events: none;
-    z-index: 0;
-  }
 }
 
-/* El contenido queda sobre el bloque */
-main > article.px-1 > * {
-  position: relative;
-  z-index: 1;
-}
-
-/* Padding interno para el contenido */
+/* Bloque semi-transparente solo en el contenido del post */
 main > article.px-1 > .content {
-  padding-top: 1.8rem;
-  padding-bottom: 0.5rem;
+  background: rgba(255, 255, 255, 0.055);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 14px;
+  padding: 1.8rem 2rem 1.8rem !important;
+  margin-top: 1.5rem;
+}
+
+[data-mode="light"] main > article.px-1 > .content {
+  background: rgba(0, 0, 0, 0.03);
+  border-color: rgba(0, 0, 0, 0.08);
 }
 
 /* Botones Anterior / Siguiente */
@@ -1148,14 +1132,10 @@ main > article.px-1 > .content {
   outline: none !important;
 }
 
-[data-mode="light"] main > article.px-1::before {
-  background: rgba(0, 0, 0, 0.03);
-  border-color: rgba(0, 0, 0, 0.08);
-}
-
-/* Página "Sobre mí" — sin bloque semitransparente */
-main > article.px-1:has(.about-avatar-wrap)::before {
-  display: none;
+/* Página "Sobre mí" — sin bloque en contenido */
+main > article.px-1:has(.about-avatar-wrap) > .content {
+  background: none;
+  border: none;
 }
 
 /* =============================================

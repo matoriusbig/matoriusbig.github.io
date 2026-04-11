@@ -6,7 +6,7 @@ categories:
 tags:
 description: Explicación de las diferencias entre la explotación manual y la automatizada.
 image:
-  path: /assets/img/posts/nombre-imagen.png
+  path: nombre-imagen.png
   alt: Descripción breve de la imagen
 featured: true
 toc: true

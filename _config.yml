@@ -154,6 +154,7 @@ defaults:
       comments: true
       toc: true
       permalink: /posts/:title/
+      media_subpath: /assets/img/posts/
   - scope:
       path: _drafts
     values:
