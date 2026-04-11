@@ -4,6 +4,8 @@ layout: default
 
 {% include lang.html %}
 
+{% assign section_posts = site.posts | where_exp: "post", "post.categories contains 'Proyecto'" %}
+
 <!-- ======================== SECTION HEADER ======================== -->
 <div class="section-header">
   <h1 class="section-glitch-title">{{ page.title }}</h1>
@@ -13,52 +15,49 @@ layout: default
 
 <div id="post-grid" class="flex-grow-1 px-xl-1">
   <div class="row g-4">
-    {% assign sorted_projects = site.projects | sort: 'order' %}
-    {% for project in sorted_projects %}
+    {% for post in section_posts %}
+      {% assign src = post.image.path | default: post.image %}
+      {% if post.media_subpath and src and src != '' %}
+        {% unless src contains '://' %}
+          {% assign src = post.media_subpath | append: '/' | append: src | replace: '///', '/' | replace: '//', '/' %}
+        {% endunless %}
+      {% endif %}
+
       <div class="col-12 col-sm-6 col-lg-4">
-        <article class="post-card project-card h-100"
-                 onclick="location.href='{{ project.url | relative_url }}'"
-                 style="cursor:pointer;">
-
-          <!-- Language banner -->
-          <div class="project-card-banner">
-            <span class="project-lang-dot" style="background:{{ project.language_color | default: '#888' }};"></span>
-            <span class="project-lang-name">{{ project.language }}</span>
-            {% if project.github_repo %}
-              <a href="https://github.com/{{ project.github_repo }}"
-                 target="_blank" rel="noopener"
-                 class="project-github-link"
-                 onclick="event.stopPropagation()">
-                <i class="fab fa-github"></i>
-              </a>
-            {% endif %}
-          </div>
-
-          <div class="post-card-body">
-            {% if project.tags.size > 0 %}
-              <div class="post-card-tags">
-                {% for tag in project.tags limit:3 %}
-                  <span class="post-card-badge">{{ tag }}</span>
-                {% endfor %}
-              </div>
-            {% endif %}
-
-            <h2 class="post-card-title">{{ project.title }}</h2>
-
-            <p class="post-card-excerpt">{{ project.description | truncate: 130 }}</p>
-
-            <div class="project-card-footer">
-              <span class="project-readme-btn">
-                <i class="fas fa-book-open fa-fw"></i> Leer README
-              </span>
+        <a href="{{ post.url | relative_url }}" class="post-card-link">
+          <article class="post-card h-100">
+            <div class="post-card-img">
+              {% if src and src != '' %}
+                <img src="{{ src }}" alt="{{ post.image.alt | default: post.title }}" loading="lazy">
+              {% else %}
+                <div class="post-card-img-placeholder"><i class="fas fa-code"></i></div>
+              {% endif %}
             </div>
-          </div>
-
-        </article>
+            <div class="post-card-body">
+              {% if post.tags.size > 0 %}
+                <div class="post-card-tags">
+                  {% for tag in post.tags limit:3 %}
+                    <span class="post-card-badge">{{ tag }}</span>
+                  {% endfor %}
+                </div>
+              {% endif %}
+              <h2 class="post-card-title">{{ post.title }}</h2>
+              <p class="post-card-excerpt">
+                {%- if post.description -%}{{ post.description | truncate: 120 }}
+                {%- else -%}{{ post.content | markdownify | strip_html | strip_newlines | truncate: 120 }}
+                {%- endif -%}
+              </p>
+              <div class="post-card-meta">
+                <i class="far fa-calendar-alt fa-fw"></i>
+                {% include datetime.html date=post.date lang=lang %}
+              </div>
+            </div>
+          </article>
+        </a>
       </div>
     {% endfor %}
 
-    {% if site.projects.size == 0 %}
+    {% if section_posts.size == 0 %}
       <div class="col-12 text-center py-5" style="color: var(--text-muted-color); font-size: 0.9rem;">
         <i class="fas fa-code fa-2x mb-3 d-block" style="opacity:0.3;"></i>
         No hay proyectos publicados aún.
