@@ -8,7 +8,7 @@ description: Explicación de las diferencias entre la explotación manual y la a
 image:
   path: nombre-imagen.png
   alt: Descripción breve de la imagen
-featured: true
+featured: false
 toc: true
 ---
 # Explotación Manual 
