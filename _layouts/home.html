@@ -51,12 +51,13 @@ layout: default
 
 <!-- ===================== FEATURED CAROUSEL ===================== -->
 {% assign featured_posts = site.posts | where: 'featured', true %}
-{% assign side_post = posts | first %}
+{% assign non_featured_posts = posts | where_exp: "p", "p.featured != true" %}
+{% assign side_post = non_featured_posts | first %}
 
 <div class="row g-4 mb-5" id="hero-row">
 
-  <!-- Carousel: 2/3 del ancho -->
-  <div class="col-12 col-lg-8">
+  <!-- Carousel: 2/3 del ancho (full width si no hay side post) -->
+  <div class="col-12 {% if side_post %}col-lg-8{% endif %}">
     <div id="hero-carousel">
       <div class="hero-track">
         {% for post in featured_posts %}
@@ -157,7 +158,7 @@ layout: default
 
 <div id="post-grid" class="flex-grow-1 px-xl-1">
   <div class="row g-4">
-    {% for post in posts %}
+    {% for post in non_featured_posts offset:1 %}
       {% assign src = post.image.path | default: post.image %}
       {% if post.media_subpath and src and src != '' %}
         {% unless src contains '://' %}
