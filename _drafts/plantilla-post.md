@@ -1,101 +1,95 @@
 ---
-# =============================================================
-#  PLANTILLA DE POST — matoriusbig.github.io
-#  Duplica este archivo, rellena los campos y sigue las notas.
-#  Borra todos los comentarios (#) antes de publicar.
-# =============================================================
-
-title: "Título del Post"          # Aparece en la card, el navegador y SEO
-date: 2026-01-01 10:00:00 -0400   # Fecha real de publicación. -0400 = hora Chile
-
-# SECCIÓN — elige UNO:
-#   Write-up    → categories: [Write-up]        (con: [Write-up, HackTheBox] etc.)
-#   Cheat Sheet → categories: [Cheat Sheet]
-#   Proyecto    → categories: [Proyecto]
+title: "Título del Post"
+date: 2026-01-01 10:00:00 -0400
 categories: [Write-up]
-
-# TAGS — palabras clave para búsqueda interna. Ej: [nmap, linux, privesc]
 tags: [tag1, tag2]
-
-# DESCRIPCIÓN — 1-2 frases cortas. Máx 160 caracteres.
-description: "Descripción corta del post."
-
-# MINIATURA — solo el nombre del archivo (la carpeta assets/img/posts/ es automática)
+description: "Descripción corta del post. Máx 160 caracteres."
+media_subpath: /assets/img/posts/YYYY-MM-DD-slug/
 image:
-  path: nombre-imagen.png
-  alt: "Descripción de la imagen"
-
-# CARRUSEL — pon true si quieres que aparezca en el carrusel del home
+  path: portada.png
 featured: false
-
-# NO TOCAR (valores por defecto correctos)
 toc: true
 ---
 
 <!--
 ════════════════════════════════════════════════════════════════
-  INSTRUCCIONES DE USO — leer antes de escribir, luego borrar
+  CONFIGURACIÓN DE OBSIDIAN — hacer UNA sola vez
 ════════════════════════════════════════════════════════════════
 
-  ① NOMBRE DEL ARCHIVO
-  ─────────────────────
-  El archivo DEBE llamarse:  YYYY-MM-DD-titulo-en-minusculas.md
-  Ejemplo:  2026-04-20-htb-lame.md
-  Sin tildes ni espacios en el nombre del archivo.
+  1. PLUGIN Image Converter → pestaña "Folder":
+       Ubicación  →  "Carpeta específica del vault"
+       Ruta       →  assets/img/posts/{notename}
 
-  ② EN QUÉ CARPETA GUARDAR
-  ──────────────────────────
-  Según la sección que corresponda:
+     pestaña "Filename":
+       Template   →  {timestamp}
 
-    _posts/  →  TODOS los posts van aquí, sin excepción.
-               (el blog los clasifica por categories automáticamente)
+  2. OBSIDIAN Settings → Files and links:
+       New link format    →  "Shortest path when possible"
+       Use [[Wikilinks]]  →  OFF
 
-  En Obsidian: abre la carpeta del blog como vault,
-  navega a _posts/ y crea el archivo ahí directamente.
+  Con esto:
+    ▸ Pegas una imagen en el post
+    ▸ Se guarda en:  assets/img/posts/2026-01-01-mi-post/1234567890.png
+    ▸ Obsidian inserta:  ![](1234567890.png)
+    ▸ Se ve en el preview de Obsidian ✓
+    ▸ Se ve en el blog ✓  (media_subpath prepende la ruta correcta)
 
-  ③ IMÁGENES
-  ────────────────
-  Todas las imágenes van en:  assets/img/posts/
+  PORTADA (image: path):
+    ▸ Pega la imagen → renómbrala a portada.png en el explorador de Obsidian
+      (Obsidian actualiza el link automáticamente)
+    ▸ Escribe  path: portada.png  en el front matter
 
-  MINIATURA (front matter):
-    image:
-      path: nombre-imagen.png        ← solo el nombre, sin ruta
-      alt: "Descripción"
+════════════════════════════════════════════════════════════════
+  INSTRUCCIONES DE PUBLICACIÓN
+════════════════════════════════════════════════════════════════
 
-  Imágenes dentro del contenido (igual que Obsidian):
-    ![Descripción](captura.png)      ← solo el nombre del archivo
-
-  Tamaño recomendado para miniaturas: 1200×630 px (16:9)
-  Formatos: .png · .jpg · .webp
-
-  ④ PUBLICAR EN GITHUB (paso a paso)
-  ─────────────────────────────────────
-  Opción A — Terminal integrada de VS Code (recomendado):
-    1. Abre VS Code en la carpeta del blog
-    2. Presiona Ctrl+` para abrir la terminal
-    3. Ejecuta los siguientes comandos uno por uno:
-
+  ① Nombre del archivo → YYYY-MM-DD-slug.md  (sin tildes ni espacios)
+  ② media_subpath      → /assets/img/posts/YYYY-MM-DD-slug/
+     (el slug = el nombre exacto del archivo sin la extensión .md)
+  ③ categories         → Write-up | Cheat Sheet | Proyecto
+  ④ Git push:
        git add .
-       git commit -m "post: Título corto del post"
+       git commit -m "post: Título"
        git push origin main
+     GitHub Pages tarda ~2 min en publicar.
 
-    GitHub Pages construirá el sitio en ~1-2 minutos.
-    Puedes ver el progreso en: github.com/matoriusbig/matoriusbig.github.io → pestaña Actions
+════════════════════════════════════════════════════════════════
+  CALLOUTS DISPONIBLES (Chirpy prompts)
+════════════════════════════════════════════════════════════════
 
-  Opción B — Script rápido (para publicar con doble clic):
-    Existe el archivo  publicar.bat  en la raíz del blog.
-    Ábrelo, escribe el mensaje del commit y listo.
-    (Si no existe todavía, pídele a Claude que lo cree.)
+> Texto informativo general.
+{: .prompt-info }
 
-  ⑤ VERIFICACIÓN FINAL antes de hacer push
-  ───────────────────────────────────────────
-    ✓ Nombre del archivo: YYYY-MM-DD-titulo.md  (sin tildes, sin espacios)
-    ✓ date: con el formato correcto  (2026-04-15 10:00:00 -0400)
-    ✓ categories coincide con la sección del blog
-    ✓ description presente (no dejarla vacía)
-    ✓ Imagen copiada en assets/img/posts/ y referenciada correctamente
-    ✓ Si va en el carrusel:  featured: true  + imagen definida
-    ✓ Borrados todos los comentarios de esta plantilla
+> Consejo o tip operativo.
+{: .prompt-tip }
+
+> Advertencia, limitación o precaución.
+{: .prompt-warning }
+
+> Superficie de ataque, peligro o alerta crítica.
+{: .prompt-danger }
+
+════════════════════════════════════════════════════════════════
+  ATTACK CARDS (copiar, pegar y editar)
+════════════════════════════════════════════════════════════════
+
+<div class="attack-grid">
+  <div class="attack-card">
+    <div class="atk-id">[ATK-01]</div>
+    <h3>Nombre del vector</h3>
+    <p>Descripción breve del vector de ataque.</p>
+  </div>
+  <div class="attack-card">
+    <div class="atk-id">[ATK-02]</div>
+    <h3>Nombre del vector</h3>
+    <p>Descripción breve del vector de ataque.</p>
+  </div>
+  <div class="attack-card">
+    <div class="atk-id">[ATK-03]</div>
+    <h3>Nombre del vector</h3>
+    <p>Descripción breve del vector de ataque.</p>
+  </div>
+</div>
 
 ════════════════════════════════════════════════════════════════
 -->
@@ -109,26 +103,21 @@ Escribe aquí una introducción al post.
 ## Reconocimiento
 
 ```bash
-# Ejemplo de bloque de código con sintaxis bash
 nmap -sV -sC -oN scan.txt 10.10.10.1
 ```
-
-Explicación del resultado.
 
 ---
 
 ## Explotación
 
-Describe el proceso de explotación.
-
-> **Nota:** usa blockquotes para destacar información importante.
+> Consejo operativo.
+{: .prompt-tip }
 
 ---
 
 ## Post-Explotación / Escalada de privilegios
 
 ```bash
-# Comandos de ejemplo
 whoami
 id
 ```

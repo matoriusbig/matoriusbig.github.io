@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "_posts/2026-04-10-explotacion_manual_vs_automatica.md",
+                "file": "_posts/2026-04-13-attacking-rdp.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "2026-04-10-explotacion_manual_vs_automatica"
+              "title": "2026-04-13-attacking-rdp"
             }
           }
         ]
@@ -78,7 +78,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300
+    "width": 200,
+    "collapsed": true
   },
   "right": {
     "id": "5a2365bb4fd9baae",
@@ -180,24 +181,41 @@
       "daily-notes:Abrir la nota de hoy": false,
       "templates:Insertar plantilla": false,
       "command-palette:Abrir paleta de comandos": false,
-      "bases:Crear nueva base": false
+      "bases:Crear nueva base": false,
+      "templater-obsidian:Templater": false
     }
   },
-  "active": "13b4d9e37cb2971a",
+  "active": "94e691ce778fb82f",
   "lastOpenFiles": [
-    "_site/assets/img/posts/nombre-imagen.png",
-    "assets/img/posts/nombre-imagen.png",
-    "_site/assets/img/posts/nombre-imagen.png.png",
-    "_posts/2026-04-10-explotacion_manual_vs_automatica.md",
-    "_site/assets/img/posts/nombre-imagen1.png",
-    "_site/assets/img/posts/nombre-imagen (2).png",
-    "assets/img/posts/nombre-imagen (2).png",
-    "_site/assets/img/posts/imagen.png",
-    "assets/img/posts/imagen.png",
+    "assets/img/posts/2026-04-13-attacking-rdp/1776118684608.webp",
+    "assets/img/logo.gif",
+    "_drafts/plantilla-post.md",
+    "_posts/2026-04-13-attacking-rdp.md",
+    "assets/img/posts/2026-04-13-attacking-rdp/1776118583451.webp",
+    "_site/assets/img/posts/2026-04-13-attacking-rdp/1776118684608.webp",
+    "_site/assets/img/posts/2026-04-13-attacking-rdp/1776118583451.webp",
+    "_site/assets/img/posts/2026-04-13-attacking-rdp",
     "_site/assets/img/posts",
-    "assets/img/logoredy.gif",
-    "assets/img/posts",
-    "_posts/Sin nombre",
-    "_site/assets/img/nombre-imagen.png.png"
+    "assets/img/posts/2026-04-13-attacking-rdp",
+    "_posts/2026-04-13-Untitled.md",
+    "_site/assets/img/posts/2026-04-13-attacking-rdp/1776118463643.webp",
+    "assets/img/posts/2026-04-13-attacking-rdp/1776118463643.webp",
+    "assets/img/posts/2026-04-13-Untitled/1776118329324.webp",
+    "_site/assets/img/posts/2026-04-13-Untitled/1776118329324.webp",
+    "_site/assets/img/posts/2026-04-13-Untitled",
+    "assets/img/posts/2026-04-13-Untitled",
+    "assets/img/posts/2026-04-13-Untitled/2026-04-13-Untitled-1776117857462.webp",
+    "_site/assets/img/posts/2026-04-13-Untitled/2026-04-13-Untitled-1776117857462.webp",
+    "_site/posts/Untitled/index.html",
+    "_site/posts/attacking-rdp/index.html",
+    "_site/posts/Untitled",
+    "_site/posts/attacking-rdp",
+    "_site/posts",
+    "_drafts/cards.md",
+    "_drafts/tip.md",
+    "_drafts/info.md",
+    "_drafts/danger.md",
+    "_drafts/warning.md",
+    "_posts/2026-04-10-explotacion_manual_vs_automatica.md"
   ]
 }

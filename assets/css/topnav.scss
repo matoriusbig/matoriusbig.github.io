@@ -1308,3 +1308,52 @@ main > article.px-1:has(.about-avatar-wrap) > .content {
 
   &:hover { color: #ff003c !important; }
 }
+
+/* =============================================
+   ATTACK CARDS (componente reutilizable en posts)
+   ============================================= */
+
+.attack-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 12px;
+  margin: 1.5rem 0;
+}
+
+.attack-card {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border-color);
+  border-radius: 8px;
+  padding: 1rem;
+  transition: border-color 0.2s, box-shadow 0.2s;
+
+  &:hover {
+    border-color: rgba(255, 0, 60, 0.45);
+    box-shadow: 0 0 14px rgba(255, 0, 60, 0.1);
+  }
+
+  h3 {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--heading-color);
+    margin: 0 0 6px;
+    border: none;
+    padding: 0;
+  }
+
+  p {
+    font-size: 0.82rem;
+    color: var(--text-muted-color);
+    line-height: 1.55;
+    margin: 0;
+  }
+}
+
+.atk-id {
+  font-family: 'Share Tech Mono', 'Courier New', monospace;
+  font-size: 11px;
+  color: #ff003c;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}

@@ -1,0 +1,59 @@
+{
+  "templater-obsidian:create-_drafts/plantilla-post.md": [
+    {
+      "modifiers": [
+        "Alt"
+      ],
+      "key": "P"
+    }
+  ],
+  "templater-obsidian:_drafts/tip.md": [
+    {
+      "modifiers": [
+        "Alt"
+      ],
+      "key": "1"
+    }
+  ],
+  "templater-obsidian:_drafts/info.md": [
+    {
+      "modifiers": [
+        "Alt"
+      ],
+      "key": "2"
+    }
+  ],
+  "templater-obsidian:_drafts/warning.md": [
+    {
+      "modifiers": [
+        "Alt"
+      ],
+      "key": "3"
+    }
+  ],
+  "templater-obsidian:_drafts/danger.md": [
+    {
+      "modifiers": [
+        "Alt"
+      ],
+      "key": "4"
+    }
+  ],
+  "templater-obsidian:_drafts/cards.md": [
+    {
+      "modifiers": [
+        "Alt"
+      ],
+      "key": "0"
+    }
+  ],
+  "markdown:toggle-preview": [],
+  "editor:toggle-source": [
+    {
+      "modifiers": [
+        "Mod"
+      ],
+      "key": "E"
+    }
+  ]
+}
