@@ -20,8 +20,23 @@
               "icon": "lucide-file",
               "title": "2026-04-13-attacking-rdp"
             }
+          },
+          {
+            "id": "f686ba6be716e449",
+            "type": "leaf",
+            "state": {
+              "type": "webviewer",
+              "state": {
+                "url": "http://127.0.0.1:4000/posts/attacking-rdp/",
+                "title": "Ataques a RDP | matoriusbig",
+                "mode": "webview"
+              },
+              "icon": "globe-2",
+              "title": "Ataques a RDP | matoriusbig"
+            }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -185,27 +200,26 @@
       "templater-obsidian:Templater": false
     }
   },
-  "active": "94e691ce778fb82f",
+  "active": "f686ba6be716e449",
   "lastOpenFiles": [
-    "assets/img/posts/2026-04-13-attacking-rdp/1776118684608.webp",
-    "assets/img/logo.gif",
-    "_drafts/plantilla-post.md",
     "_posts/2026-04-13-attacking-rdp.md",
-    "assets/img/posts/2026-04-13-attacking-rdp/1776118583451.webp",
-    "_site/assets/img/posts/2026-04-13-attacking-rdp/1776118684608.webp",
-    "_site/assets/img/posts/2026-04-13-attacking-rdp/1776118583451.webp",
+    "_site/assets/img/posts/2026-04-13-attacking-rdp/1776206158688.webp",
+    "assets/img/posts/2026-04-13-attacking-rdp/1776206158688.webp",
+    "_site/assets/img/posts/2026-04-13-attacking-rdp/1776206124774.webp",
+    "assets/img/posts/2026-04-13-attacking-rdp/1776206124774.webp",
+    "_site/assets/img/posts/2026-04-13-attacking-rdp/1776206040870.webp",
+    "assets/img/posts/2026-04-13-attacking-rdp/1776206040870.webp",
+    "_site/assets/img/posts/2026-04-13-attacking-rdp/1776205870475.webp",
+    "assets/img/posts/2026-04-13-attacking-rdp/1776205870475.webp",
+    "_site/assets/img/posts/2026-04-13-attacking-rdp/1776205020097.webp",
+    "assets/img/posts/2026-04-13-attacking-rdp/1776205020097.webp",
+    "_drafts/plantilla-post.md",
     "_site/assets/img/posts/2026-04-13-attacking-rdp",
     "_site/assets/img/posts",
     "assets/img/posts/2026-04-13-attacking-rdp",
     "_posts/2026-04-13-Untitled.md",
-    "_site/assets/img/posts/2026-04-13-attacking-rdp/1776118463643.webp",
-    "assets/img/posts/2026-04-13-attacking-rdp/1776118463643.webp",
-    "assets/img/posts/2026-04-13-Untitled/1776118329324.webp",
-    "_site/assets/img/posts/2026-04-13-Untitled/1776118329324.webp",
     "_site/assets/img/posts/2026-04-13-Untitled",
     "assets/img/posts/2026-04-13-Untitled",
-    "assets/img/posts/2026-04-13-Untitled/2026-04-13-Untitled-1776117857462.webp",
-    "_site/assets/img/posts/2026-04-13-Untitled/2026-04-13-Untitled-1776117857462.webp",
     "_site/posts/Untitled/index.html",
     "_site/posts/attacking-rdp/index.html",
     "_site/posts/Untitled",

