@@ -322,7 +322,7 @@
       }
     ]
   },
-  "isImageAlignmentEnabled": true,
+  "isImageAlignmentEnabled": false,
   "imageAlignmentDefaultAlignment": "none",
   "imageAlignmentCacheCleanupInterval": 3600000,
   "imageAlignmentCacheLocation": "config",
@@ -333,7 +333,7 @@
   "disableObsidianImageSelectionOnClick": false,
   "resizeSensitivity": 0.1,
   "scrollwheelModifier": "Shift",
-  "isImageResizeEnbaled": true,
+  "isImageResizeEnbaled": false,
   "resizeState": {
     "isResizing": false
   },

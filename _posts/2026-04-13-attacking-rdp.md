@@ -145,8 +145,6 @@ En el archivo del escritorio nos encontraremos con una sorpresa y un aviso
 
 ---
 
-## Post-Explotación / Escalada de privilegios
-
 ### RDP Session Hijacking
 
 Este es uno de los ataques más potentes relacionados con RDP en entornos de Active Directory. Si ya tenemos acceso a una máquina con privilegios de administrador local, y existe otro usuario conectado por RDP, podemos **secuestrar su sesión sin necesitar su contraseña**.

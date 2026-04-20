@@ -73,5 +73,13 @@
       ],
       "key": "E"
     }
+  ],
+  "templater-obsidian:_drafts/╰─.md": [
+    {
+      "modifiers": [
+        "Alt"
+      ],
+      "key": "."
+    }
   ]
 }
